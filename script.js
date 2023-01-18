@@ -29,21 +29,25 @@ function playRound(playerSelection, computerSelection) {
 
 let playerSelection = prompt("Choose your weapon:", "Rock, Paper or Scissor?");
 
-const computerSelection = gameOptions[getComputerChoice()];
+let computerSelection = gameOptions[getComputerChoice()];
 console.log("You chose: " + playerSelection);
 console.log("The bot chose: " + computerSelection);
 console.log(playRound(playerSelection, computerSelection));
 
-let loop = prompt("Again?", "Y/N");
+let gameLoop = prompt("Again?", "Y/N");
+gameLoop = gameLoop.toUpperCase();
 
-while(loop.toUpperCase() == "Y" || "YES") {
+while(gameLoop === ("Y" || "YES")) {
     let playerSelection = prompt("Choose your weapon:", "Rock, Paper or Scissor?");
     
-    const computerSelection = gameOptions[getComputerChoice()];
+    computerSelection = gameOptions[getComputerChoice()];
     console.log("You chose: " + playerSelection);
     console.log("The bot chose: " + computerSelection);
     console.log(playRound(playerSelection, computerSelection));
+    
+    gameLoop = prompt("Again?", "Y/N");
+    gameLoop = gameLoop.toUpperCase();
 
-    let loop = prompt("Again?", "Y/N");
-} console.log("See ya, then!")
+    if(gameLoop !== ("Y" || "YES")) break;
+} console.log("See ya, then!");
 
