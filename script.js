@@ -1,3 +1,14 @@
+//PAGE EVENT LISTENERS
+const playBttn = document.querySelector('#start');
+playBttn.onclick = () => {
+    playBttn.setAttribute("id", "started");
+    const main = document.querySelector('.main');
+    main.setAttribute("id", "gameOn");
+    console.log("GAME START");
+};
+
+// GAME FUNCTIONS
+/*
 const gameOptions = ["ROCK", "PAPER", "SCISSORS"]; // Lists all the options available for both PC and Player.
 
 function getComputerChoice() { 
@@ -50,4 +61,4 @@ while(gameLoop === ("Y" || "YES")) {
 
     if(gameLoop !== ("Y" || "YES")) break;
 } console.log("See ya, then!");
-
+*/

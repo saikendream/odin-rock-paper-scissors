@@ -19,10 +19,23 @@ body {
     font-size: 4em;
 }
 
+/* GAME STAR */
+
+#started {
+    transform: all .3s;
+    opacity: 0;
+    display: none;
+}
+
 /* MAIN */
 
-#main {
+#gameOff {
     display: none;
+}
+
+#gameOn {
+    transform: all .3s;
+    display: flex;
 }
 
 /* BUTTON */
