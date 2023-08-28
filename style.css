@@ -22,7 +22,7 @@ body {
 /* GAME STAR */
 
 #started {
-    transform: all .3s;
+    transition: all .3s;
     opacity: 0;
     display: none;
 }
@@ -34,8 +34,53 @@ body {
 }
 
 #gameOn {
-    transform: all .3s;
+    transition: all .3s;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main {
+    height: 100vh;
+}
+
+.score {
+    width: 100%;
+    font-size: .4em;
+    color: rgb(154, 140, 152);
+    justify-content: space-between;
+    padding: 35px;
+    flex: 1;
+}
+
+.control {
+    flex: 3;
+}
+
+.control .bttn {
+    flex-direction: column;
+    text-align: center;
+    margin: 25px;
+    height: fit-content;
+}
+
+.control .bttn p {
+    margin: 5px;
+    font-size: .5em;
+}
+
+.control .bttn i {
+    margin: 5px;
+}
+
+.over {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ongoing {
+    display: none;
 }
 
 /* BUTTON */
