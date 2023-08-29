@@ -83,6 +83,19 @@ body {
     display: none;
 }
 
+.resultMsg {
+    font-size: .4em;
+    position: absolute;
+    top: 85%;
+    opacity: 0;
+    transition: all .3s;
+}
+
+.visible {
+    transition: all .3s;
+    opacity: 1;
+}
+
 /* BUTTON */
 
 .bttn {

@@ -5,35 +5,86 @@ const gameOptions = ["ROCK", "PAPER", "SCISSORS"]; // Lists all the options avai
 function getComputerChoice() { 
     let botChoice = Math.floor(Math.random() * 3);
     return botChoice;
-}
+};
+
+function resultsMsg(textColor, message) {
+    const turnRes = document.querySelector('#turnRes');
+    turnRes.style.color = textColor;
+    turnRes.textContent = message;
+    turnRes.classList.add('visible');
+    setTimeout(() => {
+        turnRes.classList.remove('visible');
+        setTimeout(() => {
+            turnRes.replaceChildren();
+        }, 300);
+    }, 1000);
+};
 
 function playRound(playerSelection, computerSelection) {
     if(playerSelection == gameOptions[0] && computerSelection == gameOptions[2]) {
         wins = wins + 1;
-        return "You won! Rock beats Scissors!";
+        resultsMsg("green", "You won! Rock beats Scissors!");
     } else if(playerSelection == gameOptions[0] && computerSelection == gameOptions[1]) {
-        return "Loser! Paper beats Rock!";
+        miss = miss + 1;
+        resultsMsg("red", "Loser! Paper beats Rock!");
     } else if(playerSelection == gameOptions[0] && computerSelection == gameOptions[0]) {
         ties = ties + 1;
-        return "It's a tie! You both chose Rock!";
+        resultsMsg("#22223b", "It's a tie! You both chose Rock!");
     } else if(playerSelection == gameOptions[1] && computerSelection == gameOptions[0]) {
         wins = wins + 1;
-        return "You won! Paper beats Rock!";
+        resultsMsg("green", "You won! Paper beats Rock!");
     } else if(playerSelection == gameOptions[1] && computerSelection == gameOptions[2]) {
-        return "Loser! Scissors beat Paper!";
+        miss = miss + 1;
+        resultsMsg("red", "Loser! Scissors beat Paper!");
     } else if(playerSelection == gameOptions[1] && computerSelection == gameOptions[1]) {
         ties = ties + 1;
-        return "It's a tie! You both chose Paper!";
+        resultsMsg("#22223b", "It's a tie! You both chose Paper!");
     } else if(playerSelection == gameOptions[2] && computerSelection == gameOptions[1]) {
         wins = wins + 1;
-        return "You won! Scissors beat Paper!";
+        resultsMsg("green", "You won! Scissors beat Paper!");
     } else if(playerSelection == gameOptions[2] && computerSelection == gameOptions[0]) {
-        return "Loser! Rock beats Scissors!";
+        miss = miss + 1;
+        resultsMsg("red", "Loser! Rock beats Scissors!");
     } else if(playerSelection == gameOptions[2] && computerSelection == gameOptions[2]) {
         ties = ties + 1;
-        return "It's a tie! You both chose Scissors!";
-    } else { return "Stop cheating, there's no such an option." }
-}
+        resultsMsg("#22223b", "It's a tie! You both chose Scissors!");
+    }
+};
+
+function gameOver() {
+    const main = document.querySelector('.main');
+        main.setAttribute("id","gameOff");
+        const result = document.querySelector('#res');
+        result.setAttribute("class", "over");
+        const finalRes = document.querySelector('#results');
+        if((ties > 2) || (ties > wins)) {
+            finalRes.style.color = "#22223b";
+            finalRes.textContent = "It's a tie!" 
+        } else if((wins > miss) || (wins >= 3)) {
+            finalRes.style.color = "green";
+            finalRes.textContent = "You WON!"
+        } else {
+            finalRes.style.color = "red";
+            finalRes.textContent = "You LOST!"
+        }
+};
+
+function runGame(playerMove) {
+    // gets computer choice
+    computerSelection = gameOptions[getComputerChoice()];
+
+    let playerSelection = playerMove;
+    playRound(playerSelection, computerSelection);
+
+    // sets the ROUND number
+    round = round + 1;
+    score.innerHTML = `<div class="round">ROUND:&nbsp;${round}/5</div> <div class="wins"><span style="color: green">${wins}</span>&nbsp;WINS</div>`;
+    
+    // sets game loop
+    if(round === 5) {
+        gameOver();
+    };
+};
 
 //PAGE EVENT LISTENERS
 
@@ -42,11 +93,11 @@ playBttn.onclick = () => {
     playBttn.setAttribute("id", "started");
     const main = document.querySelector('.main');
     main.setAttribute("id", "gameOn");
-    console.log("GAME START");
 };
 
 let round = 1;
 let wins = 0;
+let miss = 0;
 let ties = 0;
 
 const score = document.querySelector('.score');
@@ -55,100 +106,19 @@ score.innerHTML = `<div class="round">ROUND:&nbsp;${round}/5</div> <div class="w
 // sets user choice to ROCK if the player clicks the bttn
 const rockBtn = document.querySelector('#btnRock');
 rockBtn.onclick = () => {
-    // gets computer choice
-    computerSelection = gameOptions[getComputerChoice()];
-
-    let playerSelection = "ROCK";
-    console.log("The bot chose: " + computerSelection);
-    console.log("You chose: " + playerSelection);
-    console.log(playRound(playerSelection, computerSelection));
-
-    // sets the ROUND number
-    round = round + 1;
-    score.innerHTML = `<div class="round">ROUND:&nbsp;${round}/5</div> <div class="wins"><span style="color: green">${wins}</span>&nbsp;WINS</div>`;
-    
-    // sets game loop
-    if(round === 5) {
-        console.log("Game over");
-        const main = document.querySelector('.main');
-        main.setAttribute("id","gameOff");
-        const result = document.querySelector('#res');
-        result.setAttribute("class", "over");
-        const finalRes = document.querySelector('#results');
-        if((wins == 2 && ties == 1) || (ties > 2)) { finalRes.textContent = "It's a tie!" } else if(wins > 2) {
-            finalRes.style.color = "green";
-            finalRes.textContent = "You WON!"
-        } else {
-            finalRes.style.color = "red";
-            finalRes.textContent = "You LOST!"
-        }
-    };
+    runGame("ROCK");
 };
 
 // sets user choice to PAPER if the player clicks the bttn
 const paperBtn = document.querySelector('#btnPaper');
 paperBtn.onclick = () => {
-    // gets computer choice
-    computerSelection = gameOptions[getComputerChoice()];
-
-    let playerSelection = "PAPER";
-    console.log("The bot chose: " + computerSelection);
-    console.log("You chose: " + playerSelection);
-    console.log(playRound(playerSelection, computerSelection));
-
-    // sets the ROUND number
-    round = round + 1;
-    score.innerHTML = `<div class="round">ROUND:&nbsp;${round}/5</div> <div class="wins"><span style="color: green">${wins}</span>&nbsp;WINS</div>`;
-    
-    // sets game loop
-    if(round === 5) {
-        console.log("Game over");
-        const main = document.querySelector('.main');
-        main.setAttribute("id","gameOff");
-        const result = document.querySelector('#res');
-        result.setAttribute("class", "over");
-        const finalRes = document.querySelector('#results');
-        if((wins == 2 && ties == 1) || (ties > 2)) { finalRes.textContent = "It's a tie!" } else if(wins > 2) {
-            finalRes.style.color = "green";
-            finalRes.textContent = "You WON!"
-        } else {
-            finalRes.style.color = "red";
-            finalRes.textContent = "You LOST!"
-        }
-    };
+    runGame("PAPER");
 };
 
 // sets user choice to SCISSORS if the player clickS the bttn
 const sciBtn = document.querySelector('#btnSci');
 sciBtn.onclick = () => {
-    // gets computer choice
-    computerSelection = gameOptions[getComputerChoice()];
-
-    let playerSelection = "SCISSORS";
-    console.log("The bot chose: " + computerSelection);
-    console.log("You chose: " + playerSelection);
-    console.log(playRound(playerSelection, computerSelection));
-
-    // sets the ROUND number
-    round = round + 1;
-    score.innerHTML = `<div class="round">ROUND:&nbsp;${round}/5</div> <div class="wins"><span style="color: green">${wins}</span>&nbsp;WINS</div>`;
-    
-    // sets game loop
-    if(round === 5) {
-        console.log("Game over");
-        const main = document.querySelector('.main');
-        main.setAttribute("id","gameOff");
-        const result = document.querySelector('#res');
-        result.setAttribute("class", "over");
-        const finalRes = document.querySelector('#results');
-        if((wins == 2 && ties == 1) || (ties > 2)) { finalRes.textContent = "It's a tie!" } else if(wins > 2) {
-            finalRes.style.color = "green";
-            finalRes.textContent = "You WON!"
-        } else {
-            finalRes.style.color = "red";
-            finalRes.textContent = "You LOST!"
-        }
-    };
+    runGame("SCISSORS");
 };
 
 const loop = document.querySelector('#loopBtn');
@@ -160,4 +130,4 @@ loop.onclick = () => {
     result.setAttribute("class", "ongoing");
     const main = document.querySelector('.main');
     main.setAttribute("id", "gameOn");
-}
+};
